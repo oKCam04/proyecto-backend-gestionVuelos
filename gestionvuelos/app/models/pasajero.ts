@@ -1,13 +1,30 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import Vuelo from './vuelo.js'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export default class Pasajero extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  @column()
+  declare nombres: string
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
+  @column()
+  declare apellidos: string
+
+  @column()
+  declare email: string
+
+  @column()
+  declare telefono: number
+
+  @column()
+  declare codvuelo: string
+
+  @column()
+  declare foto : string
+
+  @belongsTo (()=>Vuelo, {foreignKey: "codvuelo"})
+  declare vuelos: BelongsTo<typeof Vuelo>
 }

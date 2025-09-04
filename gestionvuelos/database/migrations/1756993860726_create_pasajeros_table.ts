@@ -10,7 +10,7 @@ export default class extends BaseSchema {
       table.string('apellidos').notNullable()
       table.string('email').notNullable()
       table.bigint('telefono').notNullable()
-      table.string('codvuelo').notNullable()
+      table.string('codvuelo').unsigned().references('codvuelo').inTable('vuelos').onDelete('CASCADE').notNullable()
       table.string('foto').notNullable()
     })
   }
