@@ -5,7 +5,7 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.string('codvuelo').notNullable
+      table.string('codvuelo').unique().notNullable()
       table.integer('coddestino').unsigned().references('coddestino').inTable('destinos').onDelete('CASCADE').notNullable()
       table.integer('codaerolinea').unsigned().references('codaerolinea').inTable('aerolineas').onDelete('CASCADE').notNullable()
       table.string('salaabordaje').notNullable()

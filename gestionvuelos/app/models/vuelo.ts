@@ -19,10 +19,10 @@ export default class Vuelo extends BaseModel {
   declare salaabordaje: string
 
   @column()
-  declare horasalida: DateTime
+  declare horasalida: string
 
   @column()
-  declare horallegada: DateTime
+  declare horallegada: string
 
   @belongsTo(() => Destino, { foreignKey: 'coddestino' })
   declare destinos: BelongsTo<typeof Destino>
