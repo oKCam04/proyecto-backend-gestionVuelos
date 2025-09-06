@@ -22,8 +22,12 @@ export default class PasajeroService {
     }
   
     public static async delete(id: number) {
-      const vuelito = await Pasajero.findOrFail(id)
-      await vuelito.delete()
-      return vuelito
+      const vuelito = await Pasajero.findBy('id',id)
+      if(vuelito){
+        await vuelito.delete()
+        return {mensaje:"204 No Content: Eliminación exitosa."}
+      }else{
+        return {mensaje:"404 Not Found: Pasajero no encontrado."}
+      }
     }
 }

@@ -37,7 +37,11 @@ export default class PasajerosController {
   }
 
   public async delete({ response, params }: HttpContext) {
-    await PasajeroService.delete(params.id)
-    return response.noContent()
+    try{
+        const resultado=await PasajeroService.delete(params.id)
+        return  response.status(200).json({resultado})
+    }catch(error){
+        return response.status(400).json({mensaje:"400 Bad Request: Error en la solicitud."})
+    }
   }
 }

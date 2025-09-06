@@ -40,4 +40,5 @@ router
     router.post('/crear',[PasajerosController, 'create'])
     router.get('/consultar/:id',[PasajerosController, 'getById'])
     router.get('/todo',[PasajerosController, 'getAll'])
+    router.delete('/eliminar/:id',[PasajerosController, 'delete'])
   }).prefix('/dorado/pasajeros').use(mildeware.handle)
