@@ -11,10 +11,11 @@ import router from '@adonisjs/core/services/router'
 import UsuariosController from '#controllers/usuarios_controller'
 import VuelosController from '#controllers/vuelos_controller'
 import jwt_middleware from "#middleware/jwt_middleware"
+import PasajerosController from '#controllers/pasajeros_controller'
 
 const mildeware= new jwt_middleware()
 
-
+//usuario 
 router
   .group(()=>{
     router.post('/register',[UsuariosController, 'create'])
@@ -23,6 +24,7 @@ router
   }).prefix('/dorado')
 
 
+//vuelo
 router
 
   .group(()=>{
@@ -30,3 +32,12 @@ router
     router.get('/consultar', [VuelosController, 'getAll'])
 
   }).prefix(('/dorado/vuelos')).use(mildeware.handle)
+
+
+//pasajero
+router
+  .group(()=>{
+    router.post('/crear',[PasajerosController, 'create'])
+    router.get('/consultar/:id',[PasajerosController, 'getById'])
+    router.get('/todo',[PasajerosController, 'getAll'])
+  }).prefix('/dorado/pasajeros').use(mildeware.handle)

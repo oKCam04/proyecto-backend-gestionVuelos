@@ -8,7 +8,7 @@ export default class Pasajero extends BaseModel {
   declare id: number
 
   @column()
-  declare nombres: string
+  declare nombre: string
 
   @column()
   declare apellidos: string
