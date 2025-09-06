@@ -30,6 +30,8 @@ router
   .group(()=>{
     router.post('/crear', [VuelosController, 'create'] )
     router.get('/consultar', [VuelosController, 'getAll'])
+    router.patch('/editar/:id',[VuelosController, 'update'])
+    router.get('/traer/:id',[VuelosController, 'getById'])
 
   }).prefix(('/dorado/vuelos')).use(mildeware.handle)
 

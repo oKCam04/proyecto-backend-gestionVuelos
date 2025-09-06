@@ -5,7 +5,7 @@ export default class VueloService {
     return await Vuelo.all()
   }
 
-  public static async getById(id: number) {
+  public static async getById(id: string) {
     return await Vuelo.findOrFail(id)
   }
 

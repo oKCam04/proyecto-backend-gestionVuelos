@@ -24,14 +24,21 @@ export default class VuelosController {
   }
 
     public async getById({ response, params }: HttpContext) {
-        const equipo = await VueloService.getById(params.id)
-        return response.ok(equipo)
+        try{
+            const data = await VueloService.getById(params.id)
+            const coddestino= await buscarDestino(data.coddestino)
+            const codaerolinea= await buscarAerolinea(data.codaerolinea)
+            const vuelo=[{codvuelo:data.codvuelo, coddestino:coddestino,codaerolinea:codaerolinea,salaabordaje:data.salaabordaje}]
+            return response.status(200).json(vuelo)
+        }catch{
+          return response.status(400).json({mensaje:"Error en la busqueda"})
+        }
     }
 
   public async create({ response, request }: HttpContext) {
     try{
         const {coddestino, codaerolinea, salaabordaje, horasalida, horallegada} = request.body()
-        const codvuelo=await crearVuelo()
+        const codvuelo=crearVuelo()
         const equipo = await VueloService.create({codvuelo, coddestino, codaerolinea, salaabordaje, horasalida, horallegada})
         return response.status(201).json({mensaje:"201 Created: Registro exitoso del vuelo."})
     }catch(error){
@@ -41,9 +48,17 @@ export default class VuelosController {
   }
 
   public async update({ params, request, response }: HttpContext) {
-    const {coddestino, codaerolinea, salaabordaje, horasalida, horallegada} = request.body()
-    const equipo = await VueloService.update(params.id, {coddestino, codaerolinea, salaabordaje, horasalida, horallegada})
-    return response.ok(equipo)
+    try{
+      const {horasalida, horallegada} = request.body()
+      const equipo = await VueloService.update(params.id, {horasalida, horallegada})
+      if(!equipo){
+        return response.status(404).json({mensaje:"404 Not Found: Vuelo no encontrado."})
+      }
+      return response.status(200).json({mensaje:"200 OK: Edición exitosa."})
+    }catch{
+      return response.status(400).json({mensaje:"400 Bad Request: Error en la solicitud"})
+    }
+    
   }
 
   public async delete({ response, params }: HttpContext) {
